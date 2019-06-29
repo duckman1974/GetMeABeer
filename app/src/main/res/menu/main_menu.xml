@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu"
+        android:title="@string/get_menu_item"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item android:id="@+id/beers"
+                android:title="@string/beers"
+                app:showAsAction="ifRoom"/>
+            <item android:id="@+id/hops"
+                android:title="@string/hops"
+                app:showAsAction="ifRoom"/>
+            <item android:id="@+id/brewery_events"
+                android:title="@string/brewery_events"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
+</menu>
