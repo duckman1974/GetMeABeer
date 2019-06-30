@@ -2,10 +2,13 @@ package com.example.getmeabeer.utility;
 
 import android.util.Log;
 
-import com.example.getmeabeer.model.Datum;
-import com.example.getmeabeer.model.JsonResponseData;
-import com.example.getmeabeer.model.Labels;
-import com.example.getmeabeer.model.Style;
+import com.example.getmeabeer.model.beer.DatumBeer;
+import com.example.getmeabeer.model.beer.JsonResponseDataBeer;
+import com.example.getmeabeer.model.beer.Labels;
+import com.example.getmeabeer.model.beer.Style;
+import com.example.getmeabeer.model.hops.Country;
+import com.example.getmeabeer.model.hops.DatumHops;
+import com.example.getmeabeer.model.hops.JsonResponseDataHops;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -14,19 +17,21 @@ import java.util.List;
 public class JsonUtility {
 
     private static final String TAG = JsonUtility.class.getSimpleName();
-    private List<Datum> beerList;
-    private Datum beer;
+    private List<DatumBeer> beerList;
+    private List<DatumHops> hopsList;
+    private DatumBeer beer;
+    private DatumHops hops;
+    private Country hopsCountry;
     private Labels beerLabel;
     private Style beerStyle;
 
 
-    public List<Datum> makeJsonObject(String beerData) {
-        JsonResponseData gsonObj = new Gson().fromJson(beerData, JsonResponseData.class);
-        List<Datum> datumData = gsonObj.getData();
-        //int numberOfBeers = 0;
+    public List<DatumBeer> makeBeerJsonObject(String beerData) {
+        JsonResponseDataBeer gsonObj = new Gson().fromJson(beerData, JsonResponseDataBeer.class);
+        List<DatumBeer> datumData = gsonObj.getData();
         beerList = new ArrayList();
-        for(Datum dd : datumData) {
-            beer = new Datum();
+        for(DatumBeer dd : datumData) {
+            beer = new DatumBeer();
             beerLabel = new Labels();
             beerStyle = new Style();
 
@@ -41,18 +46,36 @@ public class JsonUtility {
                 beer.setDescription(dd.getDescription());
                 beer.setLabels(beerLabel);
                 beer.setStyle(beerStyle);
-
-                //numberOfBeers += 1;
                 beerList.add(beer);
             }
-
         }
-
         Log.d(TAG, "New beer list size: " + beerList.size());
-
-
-        //Log.d(TAG, "Number of beers: " + numberOfBeers);
-
         return beerList;
+    }
+
+    public List<DatumHops> makeHopsJsonObject(String hopsData) {
+        JsonResponseDataHops gsonObj = new Gson().fromJson(hopsData, JsonResponseDataHops.class);
+        List<DatumHops> datumData = gsonObj.getData();
+        hopsList = new ArrayList();
+        for(DatumHops h : datumData) {
+            hops = new DatumHops();
+            hopsCountry = new Country();
+            if(h.getCountry() != null) {
+                Log.d(TAG, "Parsing Hops names: " + h.getName());
+                hops.setName(h.getName());
+                Log.d(TAG, "Parsing Hops description: " + h.getDescription());
+                hops.setDescription(h.getDescription());
+                Log.d(TAG, "Parsing Hops Country of Origin: " + h.getCountry().getName());
+                hopsCountry.setName(h.getCountry().getName());
+                hops.setCountry(hopsCountry);
+                Log.d(TAG, "Parsing Hops Alpha acid Min: " + h.getAlphaAcidMin());
+                hops.setAlphaAcidMin(h.getAlphaAcidMin());
+                Log.d(TAG, "Parsing Hops creation date: " + h.getCreateDate());
+                hops.setCreateDate(h.getCreateDate());
+                hopsList.add(hops);
+            }
+        }
+        Log.d(TAG, "Hops list size: " + hopsList.size());
+        return hopsList;
     }
 }

@@ -2,6 +2,7 @@ package com.example.getmeabeer.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.getmeabeer.R;
-import com.example.getmeabeer.model.Datum;
+import com.example.getmeabeer.model.beer.DatumBeer;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,18 +23,12 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     private static final String TAG = BeersAdapter.class.getSimpleName();
 
     Context context;
-    private ArrayList<Datum> beers;
+    private ArrayList<DatumBeer> beers;
 
-//    public BeersAdapter() {
-////
-////    }
-
-
-    public BeersAdapter(Context context, ArrayList<Datum> beers) {
+    public BeersAdapter(Context context, ArrayList<DatumBeer> beers) {
         this.context = context;
         this.beers = beers;
     }
-
 
     @NonNull
     @Override
@@ -48,40 +43,34 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         if(beers.get(position).getName().isEmpty()) {
             Log.d(TAG, "BeerAdapter - beers are empty");
         } else {
-
-            Datum beerData = beers.get(position);
+            DatumBeer beerData = beers.get(position);
 
             viewHolder.beerNameLabel.setText(R.string.beer_name_label);
             viewHolder.beerName.setText(beerData.getName());
             viewHolder.beerStyleLabel.setText(R.string.beer_style_label);
             viewHolder.beerStyle.setText(beerData.getStyle().getShortName());
 
-            // unavailable image is from: https://www.google.com/search?q=beer+images&rlz=1C1CHBD_enUS842US842&tbm=isch&source=iu&ictx=1&fir=ng_tBxWZqU_O3M%253A%252CELm5i7x7TFxYFM%252C_&vet=1&usg=AI4_-kRhHq3sATGRSM5g9qdnlaNKXlJmlg&sa=X&ved=2ahUKEwiY67u0lI_jAhVST98KHSg2AOcQ9QEwCHoECAcQFA#imgrc=ng_tBxWZqU_O3M:
-            if(beerData.getLabels() != null) {
-                Picasso.get().load(beerData.getLabels().getLarge()).placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_background).into(viewHolder.beerLabel);
-            }
-
-
-
+            // unavailable image is from: https://www.google.com/search?q=beer
+            // +images&rlz=1C1CHBD_enUS842US842&tbm=isch&source=iu&ictx=1&fir=ng_tBxWZqU_O3M%253A%252CELm5i7x7TFxYFM%252C_&vet=1
+            // &usg=AI4_-kRhHq3sATGRSM5g9qdnlaNKXlJmlg&sa=X&ved=2ahUKEwiY67u0lI_jAhVST98KHSg2AOcQ9QEwCHoECAcQFA#imgrc=ng_tBxWZqU_O3M:
+            Picasso.get().load(beerData.getLabels().getLarge())
+                    .placeholder(ContextCompat.getDrawable(context, R.drawable.unavailable_beer))
+                    .error(ContextCompat.getDrawable(context, R.drawable.unavailable_beer))
+                    .into(viewHolder.beerLabel);
         }
-
     }
 
     @Override
     public int getItemCount() {
-
         return beers.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         final TextView beerNameLabel;
         final TextView beerName;
         final TextView beerStyleLabel;
         final TextView beerStyle;
         final ImageView beerLabel;
-
-
 
         ViewHolder(View view) {
             super(view);
@@ -91,6 +80,5 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
             beerStyle = view.findViewById(R.id.beer_style);
             beerLabel = view.findViewById(R.id.beer_label);
         }
-
     }
 }

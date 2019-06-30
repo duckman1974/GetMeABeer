@@ -4,9 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.example.getmeabeer.constants.Constants;
-
+import com.example.getmeabeer.model.hops.DatumHops;
+import com.example.getmeabeer.utility.JsonUtility;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,32 +14,29 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import com.example.getmeabeer.model.beer.DatumBeer;
-import com.example.getmeabeer.utility.JsonUtility;
+public class HopsApi extends AsyncTask<String, Void, List<DatumHops>> {
 
-public class BeerApi extends AsyncTask<String, Void, List<DatumBeer>> {
+    private static final String TAG = HopsApi.class.getSimpleName();
 
-    private static final String TAG = BeerApi.class.getSimpleName();
-
-    public BeersApiInterface delegate = null;
+    public HopsApiInterface delegate = null;
     Context context;
-    private String beerData;
-    private List<DatumBeer> jsonData = null;
+    private String hopsData;
+    private List<DatumHops> jsonData = null;
 
-    public BeerApi() {
+    public HopsApi() {
     }
 
 
     @Override
-    protected List<DatumBeer> doInBackground(String... params) {
+    protected List<DatumHops> doInBackground(String... params) {
         JsonUtility jsonUtil = new JsonUtility();
         String typeOfDate = "";
         for(int i = 0; i < params.length; i++) {
             typeOfDate = params[i];
         }
         Log.d(TAG, "DoInBackground typeOfDate: " + typeOfDate);
-        beerData = getJsonData(typeOfDate);
-        jsonData = jsonUtil.makeBeerJsonObject(beerData);
+        hopsData = getJsonData(typeOfDate);
+        jsonData = jsonUtil.makeHopsJsonObject(hopsData);
         return jsonData;
     }
 
@@ -53,8 +50,6 @@ public class BeerApi extends AsyncTask<String, Void, List<DatumBeer>> {
         try {
             Uri builtUri = Uri.parse(Constants.URL + dataType).buildUpon()
                     .appendQueryParameter(KEY, Constants.API_KEY)
-                    //.appendQueryParameter(Constants.ORDER, Constants.RANDOM)
-                   // .appendQueryParameter(Constants.HASLABEL, Constants.LABELS_YES)
                     .build();
 
             URL url = new URL(builtUri.toString());
@@ -75,8 +70,8 @@ public class BeerApi extends AsyncTask<String, Void, List<DatumBeer>> {
             }
             if (buffer.length() == 0) return null;
 
-            beerData = buffer.toString();
-            return beerData;
+            hopsData = buffer.toString();
+            return hopsData;
 
         } catch(Exception e) {
             Log.d(TAG, "Exception retrieving jsonData: ", e);
@@ -84,9 +79,8 @@ public class BeerApi extends AsyncTask<String, Void, List<DatumBeer>> {
         return null;
     }
 
-
     @Override
-    protected void onPostExecute(List<DatumBeer> beerObject) {
-        delegate.passBeerJsonResults(beerObject);
+    protected void onPostExecute(List<DatumHops> hopsObject) {
+        delegate.passHopsJsonResults(hopsObject);
     }
 }

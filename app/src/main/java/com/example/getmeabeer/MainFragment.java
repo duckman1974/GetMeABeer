@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.getmeabeer.adapter.BeersAdapter;
-import com.example.getmeabeer.model.Datum;
+import com.example.getmeabeer.model.beer.DatumBeer;
 import com.example.getmeabeer.network.BeerApi;
 
 import java.util.ArrayList;
@@ -27,16 +27,14 @@ public class MainFragment extends Fragment  {
     BeersAdapter beersAdapter;
     @BindView(R.id.beers_recyclerview)
     RecyclerView beersRecyclerView;
-    private ArrayList<Datum> beerArrayList = null;
+    private ArrayList<DatumBeer> beerArrayList = null;
 
 
     public MainFragment() {
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         context = getContext();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
@@ -56,7 +54,6 @@ public class MainFragment extends Fragment  {
         }
         return rootView;
     }
-
 
     private void setAdapter(ArrayList beers) {
         beersAdapter = new BeersAdapter(context, beers);

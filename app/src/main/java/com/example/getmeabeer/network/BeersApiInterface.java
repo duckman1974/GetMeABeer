@@ -1,11 +1,9 @@
 package com.example.getmeabeer.network;
 
-import com.example.getmeabeer.model.Datum;
-
-import org.json.JSONObject;
+import com.example.getmeabeer.model.beer.DatumBeer;
 
 import java.util.List;
 
 public interface BeersApiInterface {
-    void passJsonResults(List<Datum> data);
+    void passBeerJsonResults(List<DatumBeer> data);
 }

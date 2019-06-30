@@ -7,4 +7,9 @@
     <string name="beer_label">Beer Label</string>
     <string name="beer_name_label">Name: </string>
     <string name="beer_style_label">Style: </string>
+    <string name="hops_name_label">Name: </string>
+    <string name="hop_country_label">Country: </string>
+    <string name="hops_description_label">Description: </string>
+    <string name="hops_creation_label">Created: </string>
+    <string name="hops_acid_label">Acid: </string>
 </resources>
