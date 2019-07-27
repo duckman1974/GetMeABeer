@@ -6,6 +6,9 @@ import com.example.getmeabeer.model.beer.DatumBeer;
 import com.example.getmeabeer.model.beer.JsonResponseDataBeer;
 import com.example.getmeabeer.model.beer.Labels;
 import com.example.getmeabeer.model.beer.Style;
+import com.example.getmeabeer.model.breweries.DatumBreweries;
+import com.example.getmeabeer.model.breweries.Images;
+import com.example.getmeabeer.model.breweries.JsonResponseDataBreweries;
 import com.example.getmeabeer.model.hops.Country;
 import com.example.getmeabeer.model.hops.DatumHops;
 import com.example.getmeabeer.model.hops.JsonResponseDataHops;
@@ -19,8 +22,11 @@ public class JsonUtility {
     private static final String TAG = JsonUtility.class.getSimpleName();
     private List<DatumBeer> beerList;
     private List<DatumHops> hopsList;
+    private List<DatumBreweries> breweriesList;
     private DatumBeer beer;
     private DatumHops hops;
+    private DatumBreweries breweries;
+    private Images breweryImages;
     private Country hopsCountry;
     private Labels beerLabel;
     private Style beerStyle;
@@ -36,6 +42,8 @@ public class JsonUtility {
             beerStyle = new Style();
 
             if(dd.getLabels() != null && dd.getStyle() != null) {
+                Log.d(TAG, "Parsing beer ID: " + dd.getId());
+                beer.setId(dd.getId());
                 Log.d(TAG, "Parsing beer label: " + dd.getLabels().getLarge());
                 beerLabel.setLarge(dd.getLabels().getLarge());
                 Log.d(TAG, "Parsing beer style: " + dd.getStyle().getShortName());
@@ -44,6 +52,8 @@ public class JsonUtility {
                 beer.setName(dd.getName());
                 Log.d(TAG, "Parsing beer description: " + dd.getDescription());
                 beer.setDescription(dd.getDescription());
+                Log.d(TAG, "Parsing beer abv: " + dd.getAbv());
+                beer.setAbv(dd.getAbv());
                 beer.setLabels(beerLabel);
                 beer.setStyle(beerStyle);
                 beerList.add(beer);
@@ -77,5 +87,30 @@ public class JsonUtility {
         }
         Log.d(TAG, "Hops list size: " + hopsList.size());
         return hopsList;
+    }
+
+    public List<DatumBreweries> makeBreweriesJsonObject(String breweriesData) {
+        JsonResponseDataBreweries gsonObj = new Gson().fromJson(breweriesData, JsonResponseDataBreweries.class);
+        List<DatumBreweries> datumData = gsonObj.getData();
+        breweriesList = new ArrayList();
+        for(DatumBreweries b : datumData) {
+            breweryImages = new Images();
+            breweries = new DatumBreweries();
+            if(b.getImages() != null) {
+                Log.d(TAG, "Brewery name: " + b.getName());
+                breweries.setName(b.getName());
+                Log.d(TAG, "Brewery established: " + b.getEstablished());
+                breweries.setEstablished(b.getEstablished());
+                Log.d(TAG, "Brewery website: " + b.getWebsite());
+                breweries.setWebsite(b.getWebsite());
+                Log.d(TAG, "Brewery image: " + b.getImages().getSquareMedium());
+                breweryImages.setSquareMedium(b.getImages().getSquareMedium());
+                breweries.setImages(breweryImages);
+                breweriesList.add(breweries);
+            }
+        }
+        Log.d(TAG, "Brewery list size: " + breweriesList.size());
+        return breweriesList;
+
     }
 }

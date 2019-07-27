@@ -11,8 +11,8 @@
             <item android:id="@+id/hops"
                 android:title="@string/hops"
                 app:showAsAction="ifRoom"/>
-            <item android:id="@+id/brewery_events"
-                android:title="@string/brewery_events"
+            <item android:id="@+id/breweries"
+                android:title="@string/breweries"
                 app:showAsAction="ifRoom"/>
         </menu>
     </item>

@@ -3,8 +3,9 @@
     <string name="get_menu_item">Menu</string>
     <string name="beers">Beers</string>
     <string name="hops">Hops</string>
-    <string name="brewery_events">Brewery Events</string>
+    <string name="breweries">Breweries</string>
     <string name="beer_label">Beer Label</string>
+    <string name="brewery_label">Brewery Label</string>
     <string name="beer_name_label">Name: </string>
     <string name="beer_style_label">Style: </string>
     <string name="hops_name_label">Name: </string>
@@ -12,4 +13,6 @@
     <string name="hops_description_label">Description: </string>
     <string name="hops_creation_label">Created: </string>
     <string name="hops_acid_label">Acid: </string>
+    <string name="brewery_name_label">Brewery </string>
+    <string name="brewery_website_label">Website </string>
 </resources>

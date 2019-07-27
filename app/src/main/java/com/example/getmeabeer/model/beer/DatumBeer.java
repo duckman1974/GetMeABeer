@@ -1,83 +1,109 @@
 package com.example.getmeabeer.model.beer;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+
 public class DatumBeer implements Parcelable {
 
+    @NonNull
     @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("name")
+    @NonNull
     @Expose
     private String name;
     @SerializedName("nameDisplay")
+    @Ignore
     @Expose
     private String nameDisplay;
     @SerializedName("description")
     @Expose
     private String description;
     @SerializedName("abv")
+    @NonNull
     @Expose
     private String abv;
     @SerializedName("ibu")
+    @Ignore
     @Expose
     private String ibu;
     @SerializedName("srmId")
+    @Ignore
     @Expose
     private Integer srmId;
     @SerializedName("availableId")
+    @Ignore
     @Expose
     private Integer availableId;
     @SerializedName("styleId")
+    @Ignore
     @Expose
     private Integer styleId;
     @SerializedName("isOrganic")
+    @Ignore
     @Expose
     private String isOrganic;
     @SerializedName("isRetired")
+    @Ignore
     @Expose
     private String isRetired;
     @SerializedName("labels")
+    @Ignore
     @Expose
     private Labels labels;
     @SerializedName("status")
+    @Ignore
     @Expose
     private String status;
     @SerializedName("statusDisplay")
+    @Ignore
     @Expose
     private String statusDisplay;
     @SerializedName("originalGravity")
+    @Ignore
     @Expose
     private String originalGravity;
     @SerializedName("createDate")
+    @Ignore
     @Expose
     private String createDate;
     @SerializedName("updateDate")
+    @Ignore
     @Expose
     private String updateDate;
     @SerializedName("srm")
+    @Ignore
     @Expose
     private Srm srm;
     @SerializedName("available")
+    @Ignore
     @Expose
     private Available available;
     @SerializedName("style")
+    @Ignore
     @Expose
     private Style style;
     public final static Parcelable.Creator<DatumBeer> CREATOR = new Creator<DatumBeer>() {
 
-        @SuppressWarnings({
-                "unchecked"
-        })
+        @SuppressWarnings({"unchecked"})
         public DatumBeer createFromParcel(Parcel in) {
+
             return new DatumBeer(in);
         }
 
         public DatumBeer[] newArray(int size) {
+
             return (new DatumBeer[size]);
         }
     };
@@ -103,6 +129,15 @@ public class DatumBeer implements Parcelable {
         this.srm = ((Srm) in.readValue((Srm.class.getClassLoader())));
         this.available = ((Available) in.readValue((Available.class.getClassLoader())));
         this.style = ((Style) in.readValue((Style.class.getClassLoader())));
+    }
+
+    @Ignore
+    private List<DatumBeer> beerModel;
+
+    public DatumBeer(String id, String name, String abv) {
+        this.id = id;
+        this.name = name;
+        this.abv = abv;
     }
 
     public DatumBeer() {
